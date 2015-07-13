@@ -5,7 +5,9 @@ function Input() {
 
   this.keys = {
     get ENTER() { return PressableKey(13); },
+    get P_UP () { return (PressableKey(38) || PressableKey(87)); },
     get UP () { return (keys[38] || keys[87]); },
+    get P_DOWN () { return (PressableKey(40) || PressableKey(83)); },
     get DOWN () { return (keys[40] || keys[83]); },
     get LEFT () { return keys[37] || keys[65]; },
     get RIGHT () { return keys[39] || keys[68]; }

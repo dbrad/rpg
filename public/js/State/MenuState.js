@@ -4,79 +4,56 @@ function MenuState(GameStateMachine, Game, Player, Graphics) {
   var p = Player;
   var g = Graphics;
 
-
+  var Container = new PIXI.Container();
+  var menu = BuildMenu("Dungeons & Dice", ["New Game", "Exit Game"], {x: 400, y: 200});
+  var MenuOptions = {
+    0: function() {
+      gsm.Change("NEWGAME");
+    },
+    1: function() {
+      gsm.Change("INIT");
+    }
+  };
   var selected = 0;
-  var orig = 300, moveTotal = 0, dir = 0.2;
 
-  var MenuContainer = new PIXI.Container();
-  var options = [];
+  Container.addChild(menu.title);
+  menu.options.forEach(function(option){
+    Container.addChild(option);
+  });
+  var txtBounce = new Animation.TextBounce(menu.options[selected]);
 
-  SetupMenu(options);
-
+  // State Methods
   this.OnEnter = function() {
-
+    selected = 0;
+    txtBounce.ChangeTarget(menu.options[selected]);
   };
   this.OnExit = function() {
-
+    txtBounce.Stop();
   };
   this.Update = function() {
     if(game.Input.keys.ENTER) {
-      switch(selected) {
-        case 0:
-          gsm.Change("NEWGAME");
-          break;
-        case 1:
-          gsm.Change("INIT")
-          break;
-        default:
-          break;
+      MenuOptions[selected]();
+    } else if(game.Input.keys.DOWN || game.Input.keys.UP) {
+      txtBounce.Stop();
+      if( game.Input.keys.DOWN ) {
+        if(++selected > menu.options.length - 1)
+          selected = menu.options.length - 1;
+      } else {
+        if(--selected < 0)
+          selected = 0;
       }
+      txtBounce.ChangeTarget(menu.options[selected]);
     }
 
-    else if(game.Input.keys.DOWN) {
-      options[selected].position.y = orig;
-      selected = 1;
-      orig = options[selected].position.y;
-    } else if(game.Input.keys.UP) {
-      options[selected].position.y = orig;
-      selected = 0;
-      orig = options[selected].position.y;
-    }
-
-    for( var op in options ) {
+    for( var op in menu.options ) {
       if(op != selected)
-        options[op].tint = 0xFFFFFF;
+        menu.options[op].tint = 0xFFFFFF;
     }
-    options[selected].tint = 0x51c1d0;
-    options[selected].position.y += dir;
-    moveTotal += dir;
-    if( moveTotal >= 5 ) {
-      dir = dir * -1;
-    } else if (moveTotal < 0) {
-      dir = dir * -1;
-    }
+    menu.options[selected].tint = 0x51c1d0;
+    txtBounce.Animate();
   };
   this.Render = function() {
     $('#omg').html("MENU");
-
-    g.render(MenuContainer);
+    g.render(Container);
   };
-
-  function SetupMenu(options) {
-    var text = null;
-    text = new PIXI.Text("New Game", {font: "24px Arial", fill : "white"});
-    text.anchor.y = text.anchor.x = 0.5;
-    text.position.x = 400;
-    text.position.y = 300;
-    MenuContainer.addChild(text);
-    options.push(text);
-
-    text = new PIXI.Text("Exit Game", {font: "24px Arial", fill : "white"});
-    text.anchor.y = text.anchor.x = 0.5;
-    text.position.x = 400;
-    text.position.y = 350;
-    MenuContainer.addChild(text);
-    options.push(text);
-    return options;
-  }
 }

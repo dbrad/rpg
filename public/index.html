@@ -2,16 +2,19 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="/js/Player.js" charset="utf-8"></script>
-    <script src="/js/Stats.js" charset="utf-8"></script>
-    <script src="/js/Item.js" charset="utf-8"></script>
-    <script src="/js/Equipment.js" charset="utf-8"></script>
-    <script src="/js/Inventory.js" charset="utf-8"></script>
+    <script src="/js/Player/Player.js" charset="utf-8"></script>
+    <script src="/js/Player/Stats.js" charset="utf-8"></script>
+    <script src="/js/Player/Item.js" charset="utf-8"></script>
+    <script src="/js/Player/Equipment.js" charset="utf-8"></script>
+    <script src="/js/Player/Inventory.js" charset="utf-8"></script>
+
     <script src="/js/State/StateMachine.js" charset="utf-8"></script>
     <script src="/js/State/InitState.js" charset="utf-8"></script>
     <script src="/js/State/MenuState.js" charset="utf-8"></script>
     <script src="/js/State/NewGameState.js" charset="utf-8"></script>
+
     <script src="/js/Input.js" charset="utf-8"></script>
+    <script src="/js/Animation.js" charset="utf-8"></script>
     <script src="/js/game.js" charset="utf-8"></script>
 
     <script src="//code.jquery.com/jquery-1.11.3.min.js" charset="utf-8"></script>
@@ -19,6 +22,31 @@
 
     </script>
     <script type="text/javascript">
+    function BuildMenu(sTitle, aOptions, position) {
+      var paOptions = [];
+
+      var pTitle = new PIXI.Text("Select a Class", {font: "24px Tahoma", fill: 0XFFFFFF});
+      pTitle.anchor.y = pTitle.anchor.x = 0.5;
+      pTitle.position.x = position.x;
+      pTitle.position.y = position.y;
+
+      var offsetY = 50;
+      var text = null;
+      aOptions.forEach( function(option) {
+        text = new PIXI.Text(option, {font: "20px Tahoma", fill: 0XFFFFFF});
+        text.anchor.y = text.anchor.x = 0.5;
+        text.position.x = position.x;
+        text.position.y = position.y + offsetY;
+        paOptions.push(text);
+        offsetY += 50;
+      });
+
+      return {
+        title: pTitle,
+        options: paOptions
+      };
+    }
+
       $(function(){
         var game = new Game();
         game.start();
