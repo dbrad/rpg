@@ -1,55 +1,21 @@
-function StateMachine() {
-  var mStates = {};
-  var mCurrentState = "";
-
-  this.Update = function(delta) {
-    mStates[mCurrentState].Update(delta);
-  };
-
-  this.Render = function() {
-    mStates[mCurrentState].Render();
-  };
-
-  this.Change = function(stateName) {
-    if( mStates[mCurrentState] )
-      mStates[mCurrentState].OnExit();
-    mCurrentState = stateName;
-    var params = [];
-    for( var i = 1; i <= arguments.length; i++ ) {
-      params.push(arguments[i]);
-    }
-
-    mStates[mCurrentState].OnEnter( params );
-  };
-
-  this.Add = function(name, state) {
-    mStates[name] = state;
-  };
-}
-
-function InitState(StateMachine) {
-  var gGameMode = StateMachine;
-  this.OnEnter = function() {
-
-  };
-  this.OnExit = function() {
-
-  };
-  this.Update = function() {
-
-  };
-  this.Render = function() {
-
-  };
-}
-
 function Game() {
   var _running = true;
   var _handler = null;
+  var player = new Player();
+  var graphics = new PIXI.autoDetectRenderer(800, 600);
+  this.Input = new Input();
+  var gGameMode = new StateMachine(this);
 
-  var gGameMode = new StateMachine();
 
-  gGameMode.Add("INIT", new InitState(gGameMode));
+  gGameMode.Add("INIT", new InitState(gGameMode, this, player, graphics));
+  gGameMode.Add("MENU", new MenuState(gGameMode, this, player, graphics));
+  gGameMode.Add("NEWGAME", new NewGameState(gGameMode, this, player, graphics));
+  // OVERWORLD
+  // DUNGEON
+  // PLAYERMENU
+  // COMBAT
+  // LOOT
+  // GAMEOVER
   gGameMode.Change("INIT");
 
   var _busy = false;
@@ -82,7 +48,7 @@ function Game() {
         _renderDelta -= _renderTiming;
         Profiler.renderCounter++;
         gGameMode.Render();
-        document.body.innerHTML = "Updates per Sec: " + Profiler.UPS + "<br>Renders Per Sec: " + Profiler.FPS;
+        $('#what').html("Updates per Sec: " + Profiler.UPS + "<br>Renders Per Sec: " + Profiler.FPS);
       }
       Profiler.render(_delta);
 
