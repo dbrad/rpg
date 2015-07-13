@@ -8,5 +8,8 @@ function Stats(stats) {
   this.GetBase = function(id) {
     return mBase[id];
   };
+  this.CalcModifiers = function(mods) {
+
+  };
   return this;
 }

@@ -14,4 +14,8 @@ function Equipment(equip) {
   if(equip) {
     //set stuff
   }
+
+  this.GetModifers = function() {
+
+  };
 }

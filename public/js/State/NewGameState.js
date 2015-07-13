@@ -13,7 +13,9 @@ function NewGameState(GameStateMachine, Game, Player, Graphics) {
       var warrior = {
         classStats : {
           "hp"  : 100,
+          "max_hp"  : 100,
           "mp"  : 0,
+          "max_mp"  : 0,
           "str" : 10,
           "agi" : 5,
           "int" : 0
@@ -27,7 +29,9 @@ function NewGameState(GameStateMachine, Game, Player, Graphics) {
       var theif = {
         classStats : {
           "hp"  : 80,
+          "max_hp"  : 80,
           "mp"  : 20,
+          "max_mp"  : 20,
           "str" : 5,
           "agi" : 5,
           "int" : 5
@@ -41,7 +45,9 @@ function NewGameState(GameStateMachine, Game, Player, Graphics) {
       var mage = {
         classStats : {
           "hp"  : 60,
+          "max_hp"  : 60,
           "mp"  : 50,
+          "max_mp"  : 50,
           "str" : 2,
           "agi" : 2,
           "int" : 10
