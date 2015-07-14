@@ -6,8 +6,12 @@ function WorldState(GameStateMachine, Game, Player, Graphics) {
 
   var Container = new PIXI.Container();
 
-var tile = new PIXI.extras.TilingSprite.fromFrame("center_grass", 800, 600);
+var tile = new PIXI.extras.TilingSprite.fromFrame("sprite_1_1", 800, 600);
 Container.addChild(tile);
+
+var tileFor = new PIXI.extras.TilingSprite.fromFrame("sprite_4_12", 800, 16);
+tileFor.position.y = 7;
+Container.addChild(tileFor);
 
 var prim = new PIXI.Graphics();
 prim.beginFill(0xFFFFFF, 0);
@@ -34,4 +38,10 @@ Container.addChild(prim);
     $('#omg').html("WORLD");
     g.render(Container);
   };
+}
+
+function Location() {
+  this.container = new PIXI.Container();
+
+  
 }
