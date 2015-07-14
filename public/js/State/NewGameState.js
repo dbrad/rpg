@@ -23,7 +23,7 @@ function NewGameState(GameStateMachine, Game, Player, Graphics) {
       };
 
       p.NewGame(warrior);
-      //gsm.Change("WORLD");
+      gsm.Change("WORLD");
     },
     1: function() {
       var theif = {
@@ -39,7 +39,7 @@ function NewGameState(GameStateMachine, Game, Player, Graphics) {
       };
 
       p.NewGame(theif);
-      //gsm.Change("WORLD");
+      gsm.Change("WORLD");
     },
     2: function() {
       var mage = {
@@ -55,7 +55,7 @@ function NewGameState(GameStateMachine, Game, Player, Graphics) {
       };
 
       p.NewGame(mage);
-      //gsm.Change("WORLD");
+      gsm.Change("WORLD");
     }
   };
   var selected = 0;

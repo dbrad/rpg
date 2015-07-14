@@ -12,6 +12,7 @@
     <script src="/js/State/InitState.js" charset="utf-8"></script>
     <script src="/js/State/MenuState.js" charset="utf-8"></script>
     <script src="/js/State/NewGameState.js" charset="utf-8"></script>
+    <script src="/js/State/WorldState.js" charset="utf-8"></script>
 
     <script src="/js/Input.js" charset="utf-8"></script>
     <script src="/js/Animation.js" charset="utf-8"></script>
@@ -22,6 +23,7 @@
 
     </script>
     <script type="text/javascript">
+    PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
     function BuildMenu(sTitle, aOptions, position) {
       var paOptions = [];
 
@@ -48,8 +50,14 @@
     }
 
       $(function(){
-        var game = new Game();
-        game.start();
+        var loader = PIXI.loader;
+        loader.add("/images/tileset.json");
+        loader.once("complete", onLoaded);
+        loader.load();
+        function onLoaded() {
+          var game = new Game();
+          game.start();
+        }
       });
     </script>
     <link rel="stylesheet" href="/css/normalize.css">
