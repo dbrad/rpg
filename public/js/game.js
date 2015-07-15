@@ -6,12 +6,13 @@ function Game() {
   this.Input = new Input();
   var gGameMode = new StateMachine(this);
 
+  CreateCombinedSprites(graphics);
 
   gGameMode.Add("INIT", new InitState(gGameMode, this, player, graphics));
   gGameMode.Add("MENU", new MenuState(gGameMode, this, player, graphics));
   gGameMode.Add("NEWGAME", new NewGameState(gGameMode, this, player, graphics));
   gGameMode.Add("WORLD", new WorldState(gGameMode, this, player, graphics));
-  // OVERWORLD
+
   // DUNGEON
   // PLAYERMENU
   // COMBAT

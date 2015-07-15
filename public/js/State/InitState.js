@@ -4,6 +4,8 @@ function InitState(GameStateMachine, Game, Player, Graphics) {
   var p = Player;
   var g = Graphics;
 
+  var complete = true;
+
   var InitContainer = new PIXI.Container();
   var text = new PIXI.Text("Loading...", {font: "24px Tahoma", fill: 0XFFFFFF});
   text.anchor.y = text.anchor.x = 0.5;
@@ -23,13 +25,19 @@ function InitState(GameStateMachine, Game, Player, Graphics) {
 
   };
   this.Update = function() {
-    if(p.initialized)
-      gsm.Change("MENU");
-    if(game.Input.keys.ENTER)
+    if( complete )
       gsm.Change("MENU");
   };
   this.Render = function() {
     $('#omg').html("INIT");
     g.render(InitContainer);
   };
+
+
+  this.Complete = function() {
+    complete = true;
+  };
+
+  var callback =  this.Complete.bind(this);
+  setTimeout(CreateCombinedSprites, 100, g, callback);
 }

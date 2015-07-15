@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <script src="/js/Player/Player.js" charset="utf-8"></script>
+    <script src="/js/Player/Hero.js" charset="utf-8"></script>
     <script src="/js/Player/Stats.js" charset="utf-8"></script>
     <script src="/js/Player/Item.js" charset="utf-8"></script>
     <script src="/js/Player/Equipment.js" charset="utf-8"></script>
@@ -24,6 +25,14 @@
     </script>
     <script type="text/javascript">
     PIXI.scaleModes.DEFAULT = PIXI.scaleModes.NEAREST;
+
+    function addSprite( container, frame, x, y ) {
+      container.addChild(new PIXI.Sprite.fromFrame(frame));
+      var sprite = container.children[container.children.length - 1];
+      sprite.anchor = new PIXI.Point(0.5, 0.5);
+      sprite.position = new PIXI.Point(x, y);
+    }
+
     function BuildMenu(sTitle, aOptions, position) {
       var paOptions = [];
 
@@ -48,7 +57,22 @@
         options: paOptions
       };
     }
+    function CreateCombinedSprites(g) {
+      var tempCont = new PIXI.Container();
+      addSprite( tempCont, "sprite_2_15", -16, -16);
+      addSprite( tempCont, "sprite_3_15", 0, -16);
+      addSprite( tempCont, "sprite_4_15", 16, -16);
 
+      addSprite( tempCont, "sprite_2_16", -16, 0);
+      addSprite( tempCont, "sprite_3_16", 0, 0);
+      addSprite( tempCont, "sprite_4_16", 16, 0);
+
+      addSprite( tempCont, "sprite_2_17", -16, 16);
+      addSprite( tempCont, "sprite_3_17", 0, 16);
+      addSprite( tempCont, "sprite_4_17", 16, 16);
+
+      PIXI.Texture.addTextureToCache(tempCont.generateTexture(g), "castle");
+    }
       $(function(){
         var loader = PIXI.loader;
         loader.add("/images/tileset.json");
