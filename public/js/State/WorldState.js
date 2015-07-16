@@ -6,10 +6,10 @@ function WorldState(GameStateMachine, Game, Player, Graphics) {
 
   var Container = new PIXI.Container();
 
-  var tile = new PIXI.extras.TilingSprite.fromFrame("sprite_1_1", 800, 600);
+  var tile = new PIXI.extras.TilingSprite.fromFrame("sprite_5_0", 800, 600);
   Container.addChild(tile);
 
-  var tileFor = new PIXI.extras.TilingSprite.fromFrame("sprite_4_12", 800, 16);
+  var tileFor = new PIXI.extras.TilingSprite.fromFrame("sprite_13_9", 800, 16);
   tileFor.position.y = 7;
   Container.addChild(tileFor);
 
@@ -27,9 +27,9 @@ function WorldState(GameStateMachine, Game, Player, Graphics) {
 
   var selectedLoc = 0;
   var locations = [];
-  locations.push(new Location("Test City", "castle", 200, 100, g));
-  Container.addChild(locations[0].sprite);
-
+//  locations.push(new Location("Test City", "castle", 200, 100, g));
+  //Container.addChild(locations[0].sprite);
+/*
   var selector = new PIXI.Sprite.fromImage("/images/loc_sel.png");
   selector.anchor = new PIXI.Point(0.5, 0.5);
   selector.position = new PIXI.Point(locations[selectedLoc].sprite.position.x, locations[selectedLoc].sprite.position.y);
@@ -38,7 +38,7 @@ function WorldState(GameStateMachine, Game, Player, Graphics) {
   var text = new PIXI.Text("HEY", {fill: 0xFFFFFF});
   text.position = new PIXI.Point(25, 460);
   Container.addChild(text);
-
+*/
   // State Methods
   this.OnEnter = function() {
 
@@ -47,7 +47,7 @@ function WorldState(GameStateMachine, Game, Player, Graphics) {
 
   };
   this.Update = function() {
-    text.text = locations[selectedLoc].name + "(" + locations[selectedLoc].sprite.getBounds().width + ")";
+    //text.text = locations[selectedLoc].name + "(" + locations[selectedLoc].sprite.getBounds().width + ")";
 
   };
   this.Render = function() {

@@ -36,7 +36,7 @@
     function BuildMenu(sTitle, aOptions, position) {
       var paOptions = [];
 
-      var pTitle = new PIXI.Text("Select a Class", {font: "24px Tahoma", fill: 0XFFFFFF});
+      var pTitle = new PIXI.Text(sTitle, {font: "24px Tahoma", fill: 0XFFFFFF});
       pTitle.anchor.y = pTitle.anchor.x = 0.5;
       pTitle.position.x = position.x;
       pTitle.position.y = position.y;
@@ -58,6 +58,7 @@
       };
     }
     function CreateCombinedSprites(g) {
+      /*
       var tempCont = new PIXI.Container();
       addSprite( tempCont, "sprite_2_15", -16, -16);
       addSprite( tempCont, "sprite_3_15", 0, -16);
@@ -72,10 +73,11 @@
       addSprite( tempCont, "sprite_4_17", 16, 16);
 
       PIXI.Texture.addTextureToCache(tempCont.generateTexture(g), "castle");
+      */
     }
       $(function(){
         var loader = PIXI.loader;
-        loader.add("/images/tileset.json");
+        loader.add("/images/roguelikeSheet.json");
         loader.once("complete", onLoaded);
         loader.load();
         function onLoaded() {

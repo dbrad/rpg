@@ -7,13 +7,15 @@
   <script src="//code.jquery.com/jquery-1.11.3.min.js" charset="utf-8"></script>
   <script src="/js/lib/pixi.js" charset="utf-8"></script>
   <script type="text/javascript">
+  var w = 0;
+  var h = 0;
     $(function(){
       var g = new PIXI.autoDetectRenderer(800, 600);
       var container = new PIXI.Container();
       $('body').append(g.view);
 
       var loader = PIXI.loader;
-      loader.add('tileset', '/images/tileset.png');
+      loader.add('tileset', '/images/roguelikeSheet_transparent.png');
       loader.once("complete", loaded);
       loader.load();
 
@@ -22,47 +24,58 @@
         container.addChild(sprite);
         var graphic = new PIXI.Graphics();
         graphic.lineStyle(1, 0xFF0000, 100);
-        for( var x = -1; x <= 255; x += 16 ) {
+        w = loader.resources.tileset.texture.width;
+        h = loader.resources.tileset.texture.height;
+        for( var x = -1; x <= w; x += 17 ) {
           graphic.moveTo(x, 0);
-          graphic.lineTo(x, 335);
+          graphic.lineTo(x, h);
         }
-        for( var y = -1; y <= 335; y += 16 ) {
+        for( var y = -1; y <= h; y += 17 ) {
           graphic.moveTo(0, y);
-          graphic.lineTo(255, y);
+          graphic.lineTo(w, y);
         }
         container.addChild(graphic);
-
-        for( var x = 0; x < 256/16; x++) {
-          for( var y = 0; y < 336/16; y++) {
+        var textContainer = new PIXI.Container();
+        for( var x = 0; x < (w+1)/17; x++) {
+          for( var y = 0; y < (h+1)/17; y++) {
             var text = new PIXI.Text(x+"\r"+y, { font : "8px monospace", fill : "#2bff00", lineHeight : 8, stroke: 'black', strokeThickness: 2 });
             text.anchor.y = 0;
-            text.position.x = (16 * x) + 1;
-            text.position.y = (16 * y) - 2;
-            container.addChild(text);
+            text.position.x = (17 * x) + 1;
+            text.position.y = (17 * y) - 2;
+            textContainer.addChild(text);
           }
         }
-
-
+        container.interactive = true;
+        container.on('mousedown', function() {
+          textContainer.visible = !textContainer.visible;
+        });
+        container.addChild(textContainer);
         requestAnimationFrame(loop);
+        function loop() {
+
+          g.render(container);
+          
+          requestAnimationFrame(loop);
+        }
       }
-      function loop() {
-        g.render(container)
-        requestAnimationFrame(loop);
-      }
+
     });
 
     function makeItSo() {
-      var w = 256, h = 336;
+      //var w = 256, h = 336;
       var tile_w = 16, tile_h = 16;
-
+      var margin = 1;
       var file = {};
       var counterX = 0;
       var counterY = 0;
 
-      for(var y = 0; y < h; y += tile_h) {
-        for(var x = 0; x < w; x += tile_w) {
+    //  for(var y = 0; y < h; y += tile_h) {
+      //  for(var x = 0; x < w; x += tile_w) {
+
+      for( var y = 0; y < (h+1)/17; y++) {
+        for( var x = 0; x < (w+1)/17; x++) {
           file["sprite_" + counterX + "_" + counterY] = {
-          	"frame": {"x":x,"y":y,"w":16,"h":16},
+          	"frame": {"x":17*x,"y":17*y,"w":16,"h":16},
           	"rotated": false,
           	"trimmed": false,
           	"sourceSize": {"w":16,"h":16}
@@ -72,7 +85,7 @@
         counterY++;
         counterX = 0;
       }
-      return JSON.stringify(file, null, 2);
+      document.write( JSON.stringify(file, null, 2) );
     }
   </script>
   <body>
